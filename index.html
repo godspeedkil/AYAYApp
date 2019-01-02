@@ -17,6 +17,7 @@
 
     <script>
         var connection = new RTCMultiConnection();
+        let input = document.getElementById('room-id');
 
         // this line is VERY_important
         connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
@@ -50,12 +51,12 @@
 
         document.getElementById('btn-open-room').onclick = function() {
             this.disabled = true;
-            connection.open( document.getElementById('room-id') );
+            connection.open( input.value );
         };
 
         document.getElementById('btn-join-room').onclick = function() {
             this.disabled = true;
-            connection.join( document.getElementById('room-id') );
+            connection.join( input.value );
         };
 
         /*
