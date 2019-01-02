@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Hello World!</title>
+    </head>
+    <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+    <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
+    <script src="background/helpers/IceServersHandler.js"></script>
+
+    <body>
+        <input type="text" id="room-id">
+        <button id="btn-open-room">Open Room</button>
+        <button id="btn-join-room">Join Room</button><hr>
+        <video id="video" autoplay playsinline controls></video>
+    </body>
+
+    <script>
+        var connection = new RTCMultiConnection();
+
+        // this line is VERY_important
+        connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+        connection.autoCloseEntireSession = true;
+
+        connection.enableLogs = true;
+
+        // all below lines are optional; however recommended.
+        connection.session = {
+            audio: true,
+            video: true,
+            oneway: true
+        };
+
+        connection.sdpConstraints.mandatory = {
+            OfferToReceiveAudio: true,
+            OfferToReceiveVideo: true
+        };
+
+        connection.getExternalIceServers = false;
+        connection.iceServers = IceServersHandler.getIceServers();
+
+        var video = document.getElementById('video');
+        connection.onstream = function(e) {
+            video.srcObject = e.stream;
+
+            setTimeout(function() {
+                video.play();
+            }, 3000);
+        };
+
+        document.getElementById('btn-open-room').onclick = function() {
+            this.disabled = true;
+            connection.open( document.getElementById('room-id') );
+        };
+
+        document.getElementById('btn-join-room').onclick = function() {
+            this.disabled = true;
+            connection.join( document.getElementById('room-id') );
+        };
+
+        /*
+        function checkPresence() {
+            connection.checkPresence(document.getElementById('room-id'), function(isRoomExist, roomID, extra) {
+                if(isRoomExist === false) {
+                    setTimeout(function() {
+                        setTimeout(checkPresence, 1000);
+                    }, 4000);
+                    return;
+                }
+
+                connection.password = null;
+
+                connection.join(document.getElementById('room-id'));
+            });
+        }
+        */
+
+        window.addEventListener('offline', function() {
+            location.reload();
+        });
+    </script>
+</html>
