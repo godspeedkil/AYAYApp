@@ -1,0 +1,33 @@
+{
+  "name": "ayayapp",
+  "version": "0.1.0",
+  "description": "Simple multiRTC desktop streamer",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/godspeedkil/AYAYApp.git"
+  },
+  "keywords": [
+    "ayaya",
+    "stream",
+    "multiRTC",
+    "webRTC",
+    "games",
+    "movies",
+    "series",
+    "desktop"
+  ],
+  "author": "GodspeedKil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/godspeedkil/AYAYApp/issues"
+  },
+  "homepage": "https://github.com/godspeedkil/AYAYApp#readme",
+  "devDependencies": {
+    "electron": "^4.0.0"
+  }
+}
